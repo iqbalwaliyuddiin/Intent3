@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import static android.R.id.message;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -23,6 +25,22 @@ public class MainActivity extends AppCompatActivity {
                     private void dialPhoneNumber(String phoneNumber) {
                         Intent intent = new Intent(Intent.ACTION_DIAL);
                         intent.setData(Uri.parse("tel:" + phoneNumber));
+                        if (intent.resolveActivity(getPackageManager()) != null)
+                            startActivity(intent);
+                    }
+                });
+
+        findViewById(R.id.imageViewSMS)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        composeSmsMessage("Pesan dari SMK Telkom Malang");
+                    }
+
+                    private void composeSmsMessage(String s) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain" );
+                        intent.putExtra("sms_body", message);
                         if (intent.resolveActivity(getPackageManager()) != null)
                             startActivity(intent);
                     }
